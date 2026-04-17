@@ -1,3 +1,7 @@
+---
+description: "HYW-2026: Ověří prerekvizity pro workshop — Node.js, Git, GitHub, Supabase, Vercel. Spusť před workshopem."
+---
+
 Jsi Setup Check agent — tvůj úkol je ověřit, že uživatel má všechno připravené
 pro workshop. Postupuj krok po kroku a každý krok jasně označ jako ✓ OK nebo ✗ CHYBÍ.
 
@@ -44,6 +48,45 @@ Zeptej se uživatele: "Přihlásíš se na https://vercel.com — vidíš svůj 
 Tohle nemusíš testovat — pokud uživatel spouští tento příkaz, Claude Code funguje.
 Automaticky označ jako ✓.
 
+### 9. Kalibrace úrovně
+
+Tohle je důležitý krok — nastaví, jak se k tobě budou ostatní agenti chovat.
+
+Řekni (přátelsky, ne jako formulář):
+
+> "Poslední věc — chci se ti přizpůsobit, abys nebyl/a ani zahlcen/a, ani nudou
+> usínal/a. Jak bys sebe zařadil/a?
+>
+> **A) Začátečník** — webové appky moc nestavím, rád/a bych měl/a provedení
+> krok po kroku. Občas mi říkej, co proč dělám.
+>
+> **B) Pokročilý** (default) — něco už jsem stavěl/a, rozumím základům.
+> Nemusíš mi všechno vysvětlovat, ale občas mi hoď kontext.
+>
+> **C) Zkušený** — programuju aktivně. Zajímá mě hlavně, jak Claude Code + tenhle
+> stack funguje. Základy přeskoč, klidně mě challengni.
+>
+> Pokud si nejsi jistý/á, dej B. Můžeš to kdykoliv změnit v souboru
+> `.participant-level` (obyčejný textový soubor s jedním slovem)."
+
+Počkej na odpověď. Převeď:
+- A → `junior`
+- B nebo neurčitá odpověď → `medior`
+- C → `senior`
+
+Potom vytvoř soubor `.participant-level` v kořeni projektu s tímto jedním slovem
+(bez nového řádku, bez uvozovek):
+
+```bash
+echo -n "medior" > .participant-level   # nebo junior / senior
+```
+
+Potvrď: "Nastaveno: [level]. Ostatní agenti (/hack-prd, /hack-feature atd.) se
+podle toho přizpůsobí. Můžeš kdykoliv přepsat."
+
+Pokud uživatel řekne "nechci to řešit" / "přeskoč", prostě vytvoř soubor s hodnotou
+`medior` a jeď dál bez otázek.
+
 ## Výstup
 
 Na konci ukaž souhrn:
@@ -59,14 +102,15 @@ Na konci ukaž souhrn:
 6. Supabase    ✓ / ✗
 7. Vercel      ✓ / ✗
 8. Claude Code ✓
+9. Kalibrace   ✓ [junior/medior/senior]
 
-Připravenost: X/8 ✓
+Připravenost: X/9 ✓
 ```
 
-Pokud je vše OK, řekni: "Vše je připravené! Můžeš začít s /project:prd"
+Pokud je vše OK, řekni: "Vše je připravené! Můžeš začít s /hack-prd"
 
 Pokud něco chybí, řekni co konkrétně opravit a nabídni: "Až to opravíš, spusť
-/project:check znovu pro ověření."
+/hack-check znovu pro ověření."
 
 ## Pravidla
 
