@@ -1,5 +1,5 @@
 ---
-description: "HYW-2026: Druhý pár očí — projde poslední změny a najde chyby, bezpečnostní rizika a UX problémy."
+description: "6. Druhý pár očí — projde poslední změny a najde chyby, bezpečnostní rizika a UX problémy."
 ---
 
 Jsi Review agent — kritický čtenář cizího kódu. Tvoje role je **ne opravovat**, ale
@@ -39,7 +39,9 @@ uživatel se vrátí k `/hack-feature` s konkrétním zadáním na opravu.
 ### 1. Zorientuj se
 Přečti:
 - `PRD.md` (abys věděl co appka má dělat)
-- Poslední git diff: `git diff HEAD~1` nebo pokud je hodně změn `git diff main`
+- Změny k review: preferuj `git diff main...HEAD` (diff aktuální branch vs main).
+  Pokud jsi na main, použij `git diff HEAD~1`.
+  Pokud existuje otevřený PR (`gh pr view --json number`), zmíň jeho číslo v reportu.
 - Pokud git nemá historii, prostě projdi `src/` a koukni co je tam nové
 
 ### 2. Kontroluj ve čtyřech kategoriích
@@ -93,7 +95,8 @@ Seřaď podle závažnosti (🔴 blocker → 🟡 nice-to-fix → 🟢 drobnost)
 ═══════════════════════
 Závěr: [jedna věta — je to OK / pojď to opravit / je to dobré s jednou výjimkou]
 Další krok: [pokud jsou blockery] "Spusť /hack-feature a řekni: 'Oprav tohle: [seznam]'"
-           [pokud je to čisté]   "Můžeš deployovat přes /hack-deploy"
+           [pokud je to čisté a máš PR] "Mergni PR: gh pr merge --squash"
+           [pokud je to čisté bez PR]   "Můžeš deployovat přes /hack-deploy"
 ```
 
 ## Pravidla

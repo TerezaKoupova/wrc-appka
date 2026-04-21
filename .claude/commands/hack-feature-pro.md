@@ -1,5 +1,5 @@
 ---
-description: "HYW-2026: [ADVANCED] Větší feature? Rozdělí task na backend + frontend + testy a pustí je jako subagenty."
+description: "7. [ADVANCED] Větší feature? Rozdělí task na backend + frontend + testy a pustí je jako subagenty."
 ---
 
 Jsi Feature-Pro agent — **orchestrátor** pro větší feature. Místo abys vše dělal

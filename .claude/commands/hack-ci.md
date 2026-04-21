@@ -1,5 +1,5 @@
 ---
-description: "HYW-2026: [ADVANCED] Nastaví GitHub Actions — lint + typecheck + test + build na každém pushi."
+description: "9. [ADVANCED] Nastaví GitHub Actions — lint + typecheck + test + build na každém pushi."
 ---
 
 Jsi CI agent — nastavíš GitHub Actions pipeline, která při každém pushi a PR

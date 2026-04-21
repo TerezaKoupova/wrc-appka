@@ -12,7 +12,7 @@ cd moje-appka
 # 2. Spusť Claude Code
 claude
 
-# 3. Ověř, že máš vše připravené
+# 3. Ověř, že máš vše připravené + založí ti GitHub repo
 /hack-check
 
 # 4. Začni s PRD agentem
@@ -27,12 +27,12 @@ V Claude Code napiš `/hack` a uvidíš autocomplete se všemi příkazy.
 
 | Příkaz | Co dělá | Kdy použít |
 |--------|---------|------------|
-| `/hack-check` | Ověří prerekvizity (Node, Git, účty...) | Ještě před workshopem |
-| `/hack-prd` | Provede tě tvorbou produktového zadání | Na začátku — první krok |
+| `/hack-check` | Ověří prerekvizity + založí vlastní GitHub repo | Ještě před workshopem |
+| `/hack-prd` | Provede tě tvorbou zadání → GitHub Issue s PRD + backlog issues | Na začátku — první krok |
 | `/hack-scaffold` | Z PRD vygeneruje celou appku | Po dokončení PRD |
-| `/hack-deploy` | Pomůže s GitHubem a Vercel deployem | Když chceš appku na internet |
-| `/hack-feature` | Pomůže přidat novou feature | Kdykoliv chceš vylepšit appku |
-| `/hack-review` | Druhý pár očí — projde změny a najde problémy | Po každé větší feature |
+| `/hack-deploy` | Deploy na Vercel → živá URL | Když chceš appku na internet |
+| `/hack-feature` | Branch + implementace + PR | Kdykoliv chceš vylepšit appku |
+| `/hack-review` | Druhý pár očí — projde změny na PR (bezpečnost, UX, soulad s PRD) | Po každé větší feature |
 
 ### Advanced track — pro rychlejší, volitelné
 
@@ -57,9 +57,9 @@ v editoru. Můžeš ji také změnit řečí — napiš agentovi "zjednoduš mi 
 - [Node.js 18+](https://nodejs.org)
 - [Git](https://git-scm.com)
 - [Claude Code](https://docs.claude.com/en/docs/claude-code) (vyžaduje Claude Pro/Max)
+- [GitHub účet](https://github.com) + [GitHub CLI (`gh`)](https://cli.github.com)
 - [Supabase účet](https://supabase.com) (free tier)
 - [Vercel účet](https://vercel.com) (free tier)
-- [GitHub účet](https://github.com)
 
 ## Stack
 
@@ -71,16 +71,27 @@ v editoru. Můžeš ji také změnit řečí — napiš agentovi "zjednoduš mi 
 ## Typický flow
 
 ```
-/hack-prd          →  Vytvořím PRD s datovým modelem
+/hack-check        →  Ověřím prerekvizity, založím tvé GitHub repo
+/hack-prd          →  Vytvořím PRD jako GitHub Issue + backlog issues
                           Spustím SQL v Supabase SQL Editoru
-/hack-scaffold     →  Vygeneruji celou appku
+/hack-scaffold     →  Vygeneruji celou appku, pushnu na GitHub
                           npm run dev → vidím appku lokálně
-/hack-deploy       →  Push na GitHub + deploy na Vercel
-                          Mám živou URL!
-/hack-feature      →  Přidávám features, iteruji
-/hack-review       →  Nechám druhou AI posoudit změny
-                          git push → auto-redeploy
+/hack-deploy       →  Deploy na Vercel → živá URL!
+/hack-feature      →  Branch + implementace + PR + Vercel preview
+/hack-review       →  Druhá AI projde PR, najde problémy
+                          Merge → auto-redeploy
 ```
+
+### Git workflow
+
+Po prvním deployi (z `main`) jde každá další feature přes branch:
+
+```
+feat/<nazev>  →  push  →  PR  →  Vercel preview  →  review  →  merge  →  auto-deploy
+```
+
+Commit messages používají conventional format: `feat:`, `fix:`, `refactor:`,
+`style:`, `ci:`, `chore:`, `docs:`.
 
 ### Když jsi rychle hotový
 

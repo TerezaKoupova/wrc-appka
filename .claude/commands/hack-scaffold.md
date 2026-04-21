@@ -1,5 +1,5 @@
 ---
-description: "HYW-2026: Vygeneruje celou Next.js + Supabase appku z tvého PRD. Spusť po /hack-prd."
+description: "3. Vygeneruje celou Next.js + Supabase appku z tvého PRD. Spusť po /hack-prd."
 ---
 
 Jsi Scaffold agent — tvůj úkol je vzít existující PRD a vytvořit z něj fungující
@@ -40,27 +40,60 @@ Potřebuju od tebe dvě hodnoty:
 ### 3. Vygeneruj aplikaci
 Na základě PRD:
 
-1. Inicializuj Next.js projekt:
-   ```
-   npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias "@/*" --use-npm
+1. **Přesuň workshop soubory z cesty** — `create-next-app` vyžaduje prázdný
+   adresář, ale v repu už jsou CLAUDE.md, README.md, .claude/, .gitignore atd.
+   Přesuň je dočasně do parentu:
+
+   ```bash
+   mkdir -p ../_workshop-tmp
+   mv CLAUDE.md README.md .claude .gitignore PRD.md .participant-level ../_workshop-tmp/ 2>/dev/null
+   # Skryté soubory co mohou zůstat: .git, .github-pending — ty nevadí
    ```
 
-2. Nainstaluj závislosti:
+2. Inicializuj Next.js projekt:
+   ```
+   npx create-next-app@15.3.2 . --typescript --tailwind --eslint --app --src-dir --import-alias "@/*" --use-npm
+   ```
+
+3. **Vrať workshop soubory zpátky** — přepiš README.md vygenerovaný create-next-app
+   naším workshopovým:
+
+   ```bash
+   mv ../_workshop-tmp/* ../_workshop-tmp/.claude ../_workshop-tmp/.gitignore . 2>/dev/null
+   rmdir ../_workshop-tmp
+   ```
+
+   Ověř, že `.env.local` je v `.gitignore` (create-next-app ho tam typicky dá,
+   ale pro jistotu zkontroluj a případně přidej).
+
+4. Nainstaluj závislosti:
    ```
    npm install @supabase/supabase-js @supabase/ssr
    ```
 
-3. Vytvoř `.env.local` s hodnotami od uživatele.
+5. Vytvoř `.env.local` s hodnotami od uživatele.
 
-4. Vytvoř Supabase client utility (`src/lib/supabase.ts`):
+6. Vytvoř Supabase client utility (`src/lib/supabase.ts`):
    - Browser client pro klientské komponenty
    - Server client pro server komponenty
 
-5. Implementuj CRUD UI podle user stories z PRD:
+7. Implementuj CRUD UI podle user stories z PRD:
    - Seznam položek s možností přidání
    - Formulář pro vytvoření nové položky
    - Možnost editace a smazání
    - Základní layout s navigací
+
+### 4. Commit a push
+
+Po úspěšném vygenerování appky commitni a pushni na GitHub (pokud remote existuje):
+
+```bash
+git add -A
+git commit -m "feat: scaffold z PRD"
+git push
+```
+
+Pokud push selže (remote neexistuje), nevadí — `/hack-deploy` to vyřeší.
 
 ## Pravidla
 
@@ -70,5 +103,8 @@ Na základě PRD:
 - Používej App Router (server a client komponenty)
 - Kód drž jednoduchý a čitelný — žádné abstrakce navíc
 - České texty v UI
+- `.env.local` nesmí být v gitu — ověř že je v `.gitignore`
+- Commit messages: conventional format
 - Po vygenerování řekni: "Appka je připravená! Spusť `npm run dev` a otevři
-  http://localhost:3000. Až budeš chtít deployovat, spusť /hack-deploy"
+  http://localhost:3000. Kód je pushnutý na GitHubu.
+  Až budeš chtít deployovat na internet, spusť /hack-deploy"

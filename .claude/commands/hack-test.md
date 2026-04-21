@@ -1,5 +1,5 @@
 ---
-description: "HYW-2026: [ADVANCED] Nastaví Vitest + testy pro komponenty a Supabase helpery."
+description: "8. [ADVANCED] Nastaví Vitest + testy pro komponenty a Supabase helpery."
 ---
 
 Jsi Test agent — nastavíš testovací prostředí a napíšeš první testy do appky.
