@@ -1,104 +1,110 @@
-# Vibe Coding Workshop Kit
+# PRD Vibe Kit
 
-Workshop materiály pro **Hack Your Way 2026** — "Od nápadu k deploynuté appce za 3 hodiny"
+Předpřipravený kit s AI agenty pro **Product Vibe Coding** workshop.
+
+Žádný kód, žádná appka — jen agenti a pravidla. Všechno si vygeneruješ sám z vlastního PRD.
 
 ## Quick Start
 
 ```bash
-# 1. Naklonuj tento kit do nového adresáře pro svůj projekt
-git clone https://github.com/[TBD]/workshop-kit.git moje-appka
-cd moje-appka
+# 1. Naklonuj kit
+git clone git@github.com:jirkasemmler/prd-vibe-kit.git <moje-appka>
 
 # 2. Spusť Claude Code
+cd <moje-appka>
 claude
+# nebo Claude Desktop → záložka Code → Working dir → <moje-appka>
 
-# 3. Ověř, že máš vše připravené + založí ti GitHub repo
+# 3. Validace — napiš /hack a mělo by to napovídat
 /hack-check
-
-# 4. Začni s PRD agentem
-/hack-prd
 ```
+
+## Co je v kitu
+
+| Soubor | Co dělá |
+|--------|---------|
+| `CLAUDE.md` | Pravidla pro AI — stack, konvence, git workflow, SDLC návyky |
+| `.claude/commands/` | 10 agentů (commandů) — PRD, scaffold, deploy, feature, review… |
+| `README.md` | Tohle čteš |
+| `.nvmrc` | Node.js verze pro Vercel |
 
 ## Dostupné příkazy
 
-V Claude Code napiš `/hack` a uvidíš autocomplete se všemi příkazy.
+Napiš `/hack` v Claude Code a uvidíš autocomplete.
 
-### Základní track — projdeš v tomhle pořadí
+| Příkaz | Co dělá | Výstup |
+|--------|---------|--------|
+| `/hack-check` | Setup, GitHub repo, volba úrovně | GitHub repo + .participant-level |
+| `/hack-prd` | PRD agent — problém, uživatel, scope, model | PRD.md + GitHub Issue + backlog + SQL |
+| `/hack-scaffold` | Z PRD vygeneruje celou appku | Next.js appka + .env.example |
+| `/hack-review` | Druhá AI projde tvůj kód | Review report (blockery, warningy) |
+| `/hack-deploy` | Vercel deploy s PROD klíči | Živá URL na *.vercel.app |
+| `/hack-feature` | Issue → branch → implementace → PR | Feature branch + PR + Vercel preview |
+| `/hack-feature-pro` | Multi-agent orchestrátor (Lead/Builder/Critic) | Větší feature rozložená na subagenty |
+| `/hack-test` | Vitest + React Testing Library | 5–8 testů + npm test zelený |
+| `/hack-ci` | GitHub Actions pipeline | CI na každém push a PR |
+| `/hack-agent` | Vlastní Claude Code agent | Nový command v .claude/commands/ |
 
-| Příkaz | Co dělá | Kdy použít |
-|--------|---------|------------|
-| `/hack-check` | Ověří prerekvizity + založí vlastní GitHub repo | Ještě před workshopem |
-| `/hack-prd` | Provede tě tvorbou zadání → GitHub Issue s PRD + backlog issues | Na začátku — první krok |
-| `/hack-scaffold` | Z PRD vygeneruje celou appku | Po dokončení PRD |
-| `/hack-deploy` | Deploy na Vercel → živá URL | Když chceš appku na internet |
-| `/hack-feature` | Branch + implementace + PR | Kdykoliv chceš vylepšit appku |
-| `/hack-review` | Druhý pár očí — projde změny na PR (bezpečnost, UX, soulad s PRD) | Po každé větší feature |
+## Dva režimy — stejné commandy, jiný tón
 
-### Advanced track — pro rychlejší, volitelné
+`/hack-check` se zeptá na úroveň: **basic** nebo **advanced**.
 
-| Příkaz | Co dělá | Kdy použít |
-|--------|---------|------------|
-| `/hack-feature-pro` | Orchestrátor — rozdělí task mezi backend + frontend + test subagenty | Větší feature, co se dotýká DB i UI |
-| `/hack-test` | Nastaví Vitest a napíše první testy | Když máš hotovou základní appku a chceš seriózní projekt |
-| `/hack-ci` | Nastaví GitHub Actions pipeline (lint + typecheck + test + build) | Po `/hack-test`, nebo samostatně bez testů |
-| `/hack-agent` | Vytvoř si vlastního Claude Code agenta (custom command) | Když chceš pochopit jak agenti fungují a napsat vlastního |
+- **Basic** — agent vysvětluje, nabízí příklady, ptá se po jedné otázce, drží jednoduchý scope
+- **Advanced** — agent jede rychle, challenguje rozhodnutí, přeskakuje vysvětlení, nechává volnost
 
-## Úroveň účastníka
-
-Agenti se přizpůsobují tvé úrovni (basic / advanced). `/hack-check` se
-tě na úroveň zeptá a uloží ji do `.participant-level`. Ostatní agenti si soubor
-přečtou a upraví chování — basic dostane víc hand-holdingu, advanced víc challenge.
-
-Default je `basic`. Úroveň kdykoliv přepíšeš otevřením `.participant-level`
-v editoru. Můžeš ji také změnit řečí — napiš agentovi "zjednoduš mi to" nebo
-"nemusíš mi to vysvětlovat" a přizpůsobí se.
+Všech 10 agentů je dostupných pro všechny. Přepínáš kdykoliv v `.participant-level`.
 
 ## Prerekvizity
 
 - [Node.js 18+](https://nodejs.org)
-- [Git](https://git-scm.com)
-- [Claude Code](https://docs.claude.com/en/docs/claude-code) (vyžaduje Claude Pro/Max)
-- [GitHub účet](https://github.com) + [GitHub CLI (`gh`)](https://cli.github.com)
-- [Supabase účet](https://supabase.com) (free tier)
-- [Vercel účet](https://vercel.com) (free tier)
+- [Git](https://git-scm.com) + [GitHub CLI (`gh`)](https://cli.github.com)
+- [Claude Code](https://docs.claude.com/en/docs/claude-code) (Claude Pro/Max) nebo Claude Desktop (záložka Code)
+- [Supabase](https://supabase.com) — **dva projekty** (DEV + PROD), oba free tier
+- [Vercel](https://vercel.com) — free tier
+
+### Volitelné (podle appky)
+
+- [Gemini API](https://aistudio.google.com) — AI feature (free tier)
+- [Brevo](https://www.brevo.com) — odesílání emailů (free tier, 300/den)
 
 ## Stack
 
-- **Next.js** — React framework (App Router, TypeScript)
-- **Supabase** — PostgreSQL databáze + autentizace
-- **Tailwind CSS** — styling
-- **Vercel** — hosting a automatický deploy
+- **Next.js 15** — App Router, TypeScript, Tailwind CSS
+- **Supabase** — PostgreSQL + RLS + Auth + Storage
+- **Vercel** — hosting, auto-deploy, preview URLs
 
-## Typický flow
-
-```
-/hack-check        →  Ověřím prerekvizity, založím tvé GitHub repo
-/hack-prd          →  Vytvořím PRD jako GitHub Issue + backlog issues
-                          Spustím SQL v Supabase SQL Editoru
-/hack-scaffold     →  Vygeneruji celou appku, pushnu na GitHub
-                          npm run dev → vidím appku lokálně
-/hack-deploy       →  Deploy na Vercel → živá URL!
-/hack-feature      →  Branch + implementace + PR + Vercel preview
-/hack-review       →  Druhá AI projde PR, najde problémy
-                          Merge → auto-redeploy
-```
-
-### Git workflow
-
-Po prvním deployi (z `main`) jde každá další feature přes branch:
+## Flow
 
 ```
-feat/<nazev>  →  push  →  PR  →  Vercel preview  →  review  →  merge  →  auto-deploy
+/hack-check     →  Setup + GitHub repo
+/hack-prd       →  PRD → GitHub Issue + backlog + SQL
+                    SQL spustíš v DEV Supabase projektu
+/hack-scaffold  →  Appka z PRD + DEV klíče do .env.local
+                    npm run dev → localhost:3000
+/hack-deploy    →  Vercel + PROD klíče → živá URL
+                    SQL spustíš i v PROD projektu
 ```
 
-Commit messages používají conventional format: `feat:`, `fix:`, `refactor:`,
-`style:`, `ci:`, `chore:`, `docs:`.
-
-### Když jsi rychle hotový
+Pak iteruješ:
 
 ```
-/hack-test         →  Vitest + první testy
-/hack-ci           →  GitHub Actions pipeline
-/hack-feature-pro  →  Větší feature s orchestrátorem
-/hack-agent        →  Postav vlastního Claude Code agenta
+Issue/prompt → branch → /hack-feature → /hack-review → PR → preview → merge → repeat
 ```
+
+## SDLC návyky
+
+- **Issue-driven development** — jeden issue = jeden branch = jeden PR
+- **Preview = staging** — Vercel preview URL na každém PR, nikdy merge bez testu
+- **Code review** — /hack-review jako druhý pár očí
+- **Migrace v gitu** — SQL v `migrations/` složce, DB změny v PR description
+- **DEV/PROD oddělení** — lokálně DEV databáze, Vercel PROD databáze
+- **.env.example** — šablona proměnných v gitu, tajné klíče v .env.local
+
+## Recepty v /hack-feature
+
+Agent má připravené recepty pro:
+
+- **AI feature** — Gemini nebo Groq, API route handler, klientské volání
+- **Odesílání emailů** — Brevo REST API, server-side route
+- **File upload** — Supabase Storage, klientský upload + public URL
+- **Autorizace** — Supabase Auth, login/signup, RLS zpřísnění

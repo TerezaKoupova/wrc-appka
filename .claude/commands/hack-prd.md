@@ -302,9 +302,29 @@ a já je tam vytvořím."
   Tato policy povolí vše (čtení i zápis) pro všechny — je to workshop MVP.
   Až účastník přidá auth, policy se zpřísní na `auth.uid() = user_id`.
 - PRD.md vždy ulož lokálně (agenti ho čtou). GitHub Issue je bonus pro uživatele.
-- Commitni PRD.md a migrations a pushni:
+- **Aktualizuj README.md** — přepiš začátek README tak, aby popisoval účastníkovu
+  appku, ne workshop kit. Na začátek přidej:
+  ```markdown
+  # [Název aplikace]
+
+  [1-2 věty co appka dělá a pro koho]
+
+  ## Stack
+  Next.js + Supabase + Tailwind + Vercel
+
+  ## Lokální vývoj
   ```bash
-  git add PRD.md migrations/
+  npm install
+  npm run dev
+  ```
+
+  ---
+  ```
+  Zbytek README (příkazy, prerekvizity, flow) nech — je to užitečná reference.
+  Ale první co člověk uvidí v repu má být popis appky, ne kitu.
+- Commitni PRD.md, migrations a README a pushni:
+  ```bash
+  git add PRD.md migrations/ README.md
   git commit -m "docs: PRD — [název aplikace]"
   git push
   ```
