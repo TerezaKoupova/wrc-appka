@@ -138,4 +138,6 @@ Pokud push selže (remote neexistuje), nevadí — `/hack-deploy` to vyřeší.
 - Commit messages: conventional format
 - Po vygenerování řekni: "Appka je připravená! Spusť `npm run dev` a otevři
   http://localhost:3000. Kód je pushnutý na GitHubu.
-  Až budeš chtít deployovat na internet, spusť /hack-deploy"
+  Další krok: spusť `/hack-review` — druhá AI projde kód a najde blockery
+  ještě před tím, než to pustíš na internet. Až bude review čistý, přijde
+  na řadu `/hack-deploy`."
